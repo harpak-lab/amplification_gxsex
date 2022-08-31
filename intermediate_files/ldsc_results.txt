@@ -1,0 +1,82 @@
+Code	Phenotype	Sex	Heritability	h2 std error	Correlation	Correlation std error
+height	Height	both_sex	0.4202	0.0174	0.9723	0.0082
+height	Height	female	0.4338	0.0196	0.9723	0.0082
+height	Height	male	0.4395	0.0205	0.9723	0.0082
+testosterone	Testosterone	both_sex	0.085	0.0113	0.0112	0.0521
+testosterone	Testosterone	female	0.06	0.0068	0.0112	0.0521
+testosterone	Testosterone	male	0.1706	0.022	0.0112	0.0521
+bmi	BMI	both_sex	0.2308	0.0078	0.9241	0.0137
+bmi	BMI	female	0.2438	0.0088	0.9241	0.0137
+bmi	BMI	male	0.2583	0.0105	0.9241	0.0137
+RBC_count	RBC count	both_sex	0.1857	0.0138	0.9551	0.0201
+RBC_count	RBC count	female	0.2028	0.0159	0.9551	0.0201
+RBC_count	RBC count	male	0.1862	0.0158	0.9551	0.0201
+IGF1	IGF-1	both_sex	0.2049	0.0143	0.8909	0.0192
+IGF1	IGF-1	female	0.2061	0.0154	0.8909	0.0192
+IGF1	IGF-1	male	0.2451	0.017	0.8909	0.0192
+creatinine	Creatinine	both_sex	0.0977	0.0056	0.8898	0.0296
+creatinine	Creatinine	female	0.1321	0.008	0.8898	0.0296
+creatinine	Creatinine	male	0.0933	0.0072	0.8898	0.0296
+weight	Weight	both_sex	0.2387	0.0086	0.9365	0.0139
+weight	Weight	female	0.2466	0.0093	0.9365	0.0139
+weight	Weight	male	0.264	0.0111	0.9365	0.0139
+calcium	Calcium	both_sex	0.1065	0.0111	0.9663	0.0295
+calcium	Calcium	female	0.1082	0.0143	0.9663	0.0295
+calcium	Calcium	male	0.1236	0.0158	0.9663	0.0295
+protein_total	Total protein	both_sex	0.1284	0.0082	0.9498	0.0269
+protein_total	Total protein	female	0.1275	0.0085	0.9498	0.0269
+protein_total	Total protein	male	0.1372	0.0111	0.9498	0.0269
+urea	Urea	both_sex	0.0918	0.0058	0.9108	0.0336
+urea	Urea	female	0.1039	0.0068	0.9108	0.0336
+urea	Urea	male	0.0933	0.008	0.9108	0.0336
+SHBG	SHBG	both_sex	0.157	0.0269	0.8671	0.0295
+SHBG	SHBG	female	0.1708	0.029	0.8671	0.0295
+SHBG	SHBG	male	0.2361	0.0499	0.8671	0.0295
+whole_body_fat_mass	Whole body fat mass	both_sex	0.2183	0.0072	0.9135	0.0144
+whole_body_fat_mass	Whole body fat mass	female	0.2354	0.0084	0.9135	0.0144
+whole_body_fat_mass	Whole body fat mass	male	0.2377	0.0096	0.9135	0.0144
+FVC_best	Forced vital capacity	both_sex	0.1973	0.0077	0.9728	0.0205
+FVC_best	Forced vital capacity	female	0.2126	0.0095	0.9728	0.0205
+FVC_best	Forced vital capacity	male	0.212	0.0113	0.9728	0.0205
+HbA1c	HbA1c	both_sex	0.1063	0.0069	0.98	0.0316
+HbA1c	HbA1c	female	0.1148	0.0088	0.98	0.0316
+HbA1c	HbA1c	male	0.111	0.0088	0.98	0.0316
+urate	Urate	both_sex	0.168	0.0249	0.87	0.0311
+urate	Urate	female	0.2222	0.0444	0.87	0.0311
+urate	Urate	male	0.1717	0.0326	0.87	0.0311
+arm_fatfree_mass_L	Arm fat free mass (L)	both_sex	0.2317	0.009	0.9327	0.0144
+arm_fatfree_mass_L	Arm fat free mass (L)	female	0.2433	0.0101	0.9327	0.0144
+arm_fatfree_mass_L	Arm fat free mass (L)	male	0.2774	0.0125	0.9327	0.0144
+arm_fatfree_mass_R	Arm fat free mass (R)	both_sex	0.2316	0.009	0.9466	0.0138
+arm_fatfree_mass_R	Arm fat free mass (R)	female	0.255	0.011	0.9466	0.0138
+arm_fatfree_mass_R	Arm fat free mass (R)	male	0.2786	0.0124	0.9466	0.0138
+eosinophil_perc	Eosinophil percentage	both_sex	0.1328	0.0109	0.9659	0.0249
+eosinophil_perc	Eosinophil percentage	female	0.1249	0.0126	0.9659	0.0249
+eosinophil_perc	Eosinophil percentage	male	0.1501	0.0131	0.9659	0.0249
+lymphocyte_perc	Lymphocyte percentage	both_sex	0.1313	0.0096	0.9422	0.0225
+lymphocyte_perc	Lymphocyte percentage	female	0.1488	0.0111	0.9422	0.0225
+lymphocyte_perc	Lymphocyte percentage	male	0.1306	0.01	0.9422	0.0225
+waist_circ	Waist circumference	both_sex	0.1969	0.0067	0.8963	0.017
+waist_circ	Waist circumference	female	0.2077	0.0078	0.8963	0.017
+waist_circ	Waist circumference	male	0.2187	0.0095	0.8963	0.017
+hip_circ	Hip circumference	both_sex	0.1951	0.0071	0.8929	0.0164
+hip_circ	Hip circumference	female	0.2157	0.0084	0.8929	0.0164
+hip_circ	Hip circumference	male	0.2159	0.0102	0.8929	0.0164
+waist_to_hip	Waist to hip ratio	both_sex	0.158	0.0053	0.7517	0.0252
+waist_to_hip	Waist to hip ratio	female	0.1866	0.0091	0.7517	0.0252
+waist_to_hip	Waist to hip ratio	male	0.1757	0.0073	0.7517	0.0252
+wth_bmi_adj	Waist:hip (bmi adjusted)	both_sex	0.1282	0.0072	0.6322	0.0269
+wth_bmi_adj	Waist:hip (bmi adjusted)	female	0.1821	0.0131	0.6322	0.0269
+wth_bmi_adj	Waist:hip (bmi adjusted)	male	0.1268	0.0074	0.6322	0.0269
+diastolicBP_auto	Diastolic BP	both_sex	0.1278	0.0054	0.9241	0.0274
+diastolicBP_auto	Diastolic BP	female	0.1609	0.0081	0.9241	0.0274
+diastolicBP_auto	Diastolic BP	male	0.1092	0.0069	0.9241	0.0274
+systolicBP_auto	Systolic BP	both_sex	0.134	0.0055	0.9373	0.0253
+systolicBP_auto	Systolic BP	female	0.1591	0.0079	0.9373	0.0253
+systolicBP_auto	Systolic BP	male	0.1222	0.0068	0.9373	0.0253
+albumin	Albumin	both_sex	0.1137	0.0073	0.9662	0.031
+albumin	Albumin	female	0.1118	0.0078	0.9662	0.031
+albumin	Albumin	male	0.1219	0.0096	0.9662	0.031
+pulse_rate	Pulse rate	both_sex	0.1362	0.0082	0.8956	0.026
+pulse_rate	Pulse rate	female	0.1513	0.0098	0.8956	0.026
+pulse_rate	Pulse rate	male	0.1409	0.0092	0.8956	0.026

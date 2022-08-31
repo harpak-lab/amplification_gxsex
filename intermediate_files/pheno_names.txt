@@ -1,0 +1,28 @@
+Code	Phenotype	Unit
+albumin	Albumin	g/L
+arm_fatfree_mass_L	Arm fat-free mass (L)	kg
+arm_fatfree_mass_R	Arm fat-free mass (R)	kg
+bmi	BMI	kg/m2
+calcium	Calcium	mmol/L
+creatinine	Creatinine	umol/L
+diastolicBP_auto	Diastolic BP	mmHg
+eosinophil_perc	Eosinophil percentage	%
+FVC_best	Forced vital capacity	L
+HbA1c	HbA1c	mmol/mol
+height	Height	cm
+hip_circ	Hip circumference	cm
+IGF1	IGF-1	nmol/L
+lymphocyte_perc	Lymphocyte percentage %
+protein_total	Total protein	g/L
+pulse_rate	Pulse rate	bpm
+RBC_count	RBC count	10^12 cells/L
+SHBG	SHBG	nmol/L
+systolicBP_auto	Systolic BP	mmHg
+testosterone	Testosterone	nmol/L
+urate	Urate	umol/L
+urea	Urea	mmol/L
+waist_circ	Waist circumference	cm
+waist_to_hip	Waist to hip ratio
+weight	Weight	kg
+whole_body_fat_mass	Whole body fat mass	kg
+wth_bmi_adj	Waist:hip (bmi adjusted)

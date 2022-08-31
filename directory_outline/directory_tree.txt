@@ -1,0 +1,72 @@
+$GWAS_DIR
+  mash_weights.txt
+  nontrivial_weight.pdf
+  noeffect_weight.txt
+  noeffect_weight_same.txt
+  simulation_matrix_k_5k.RData
+  simulation_matrix_k_10k.RData
+  simulation_matrix_k_15k.RData
+  simulation_matrix_k_20k.RData
+  matrice_names.txt
+  [phenotype code]
+    male_all.[phenotype code].glm.linear
+    female_all.[phenotype code].glm.linear
+    both_sex_all.[phenotype code].glm.linear
+    annotation
+        [sex]_[phenotype code].clumped.ids
+        [sex]_phenotype code]_annotation.txt
+    mash
+        [phenotype code]_mash.RData
+        [phenotype code]_mixprop_100_all.txt
+        [phenotype code]_mash_100g.RData
+        [phenotype code]_mash_pm.txt
+        [phenotype code]_mash_psd.txt
+        [phenotype code]_mash_lfsr.txt
+        [phenotype code]_mash_weights.txt
+        [phenotype code]_mash_large.pdf
+        [phenotype code]_mash_small.pdf
+    PGS_1
+        [phenotype code]_mash_pgs.RData
+        [phenotype code]_mash_100g_pgs.RData
+        [phenotype code]_mash_pm.txt
+        [phenotype code]_mash_psd.txt
+        [phenotype code]_mash_lfsr.txt
+        [phenotype code]_mash_weights.txt
+    PGS_2
+    PGS_3
+    PGS_4
+    PGS_5
+$QC_DIR
+    maf_sample_20k.txt
+$PHENO_DIR
+    pheno_[phenotype code].txt 
+    QC_ids.txt
+    sex_ids.txt
+    pheno_names.txt
+    pheno_meanvar.txt
+    FIG4a_phenovar_phenomean.pdf
+    FIG4b_phenovar_amplification.pdf
+$ENSEMBL
+  ensembl software
+$ENSEMBL_CACHE
+
+$LDSC_DIR
+  #ldsc software
+$LDSC_FILE
+  ldsc_results.txt
+  relative_h2.txt
+  [phenotype code]
+    [phenotype code]_[sex]_h2.log
+    [phenotype code]_male_female.log
+$LD_SCORE
+  eur_w_ld_chr
+  w_hm3.snplist
+$LD_1000G
+  all_phase3.bed
+  all_phase3.bim
+  all_phase3.fam
+  eur_ids.txt
+$SEL_DIR
+  fst_plot_testosterone.1e-05.RData
+  fst_plot_protein_total.1e-05.RData
+  zscore_plot.1e-05.RData
