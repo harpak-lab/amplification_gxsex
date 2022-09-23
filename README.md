@@ -14,12 +14,15 @@ Provided below are instructions and details for scripts used to generate the res
 ## Software
 *plink v1.9 beta* (Purcell, S. & Chang, C 2021)  
 *plink v2.0 alpha* (Purcell, S. & Chang, C 2020)  
-- Download both to the directory containing all the scripts  
+- Download both to the directory containing all the scripts 
+ 
 *LDSC v1.0.1*  (Bulik-Sullivan et al. 2015)  
+
 Ensembl command line *variant effect predictor (VEP) v106* (McLaren et al. 2016)  
 - We used the command line VEP tool to annotate SNPs, following documentation listed on the website  
 - We downloaded cache files for human genome assembly GRCh37 using INSTALL.pl to $ENSEMBL_CACHE  
 - perl module Set::IntervalTree also needs to be installed to use the --nearest flag for VEP  
+
 *mashr* package in R (Urbut, et al. 2019)  
 
 ## Documentation
@@ -32,7 +35,7 @@ Phenotype files are obtained from UK Biobank and renamed pheno_(phenotype code).
 
 ### Single snp analysis
 ##### Miami plots from GWAS summary statistics estimated in males and females only
-Download sex-specific summary statistics from [UTBox](https://utexas.box.com/s/ef25198jq6owpcq5j2wq6najovlq75b8) in the corresponding $GWAS_DIR/[phenotype code] folder
+Download sex-specific summary statistics from [UTBox](https://utexas.box.com/s/ef25198jq6owpcq5j2wq6najovlq75b8) in the corresponding $GWAS_DIR/[phenotype code] folder. 
 Code Example: ```./manhattan.R -p arm_fatfree_mass_L -n "Arm fat-free mass (L)"```
 <br> <br/>
 ##### SNP annotation for list of SNPs after clumping and thresholding, removing SNPs with p-value>5e-8, pairwise LD threshold r<sup>2</sup>>0.1, or within 250kb  
