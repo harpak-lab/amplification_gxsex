@@ -14,18 +14,18 @@ Provided below are instructions and details for scripts used to generate the res
 ## Software
 *plink v1.9 beta* (Purcell, S. & Chang, C 2021)  
 *plink v2.0 alpha* (Purcell, S. & Chang, C 2020)  
-- Download both to the directory containing all the scripts
+- Download both to the directory containing all the scripts  
 *LDSC v1.0.1*  (Bulik-Sullivan et al. 2015)  
 Ensembl command line *variant effect predictor (VEP) v106* (McLaren et al. 2016)  
-- We used the command line VEP tool to annotate SNPs, following documentation listed on the website 
-- We downloaded cache files for human genome assembly GRCh37 using INSTALL.pl to $ENSEMBL_CACHE
+- We used the command line VEP tool to annotate SNPs, following documentation listed on the website  
+- We downloaded cache files for human genome assembly GRCh37 using INSTALL.pl to $ENSEMBL_CACHE  
 - perl module Set::IntervalTree also needs to be installed to use the --nearest flag for VEP  
 *mashr* package in R (Urbut, et al. 2019)  
 
 ## Documentation
 ### General Flags
-- ```-p``` or ```--pheno``` flag indicates the phenotype code
-- ```-n``` or ```--name``` flag indicates a formated phenotype name, often used for a title of a plot
+- ```-p``` or ```--pheno``` flag indicates the phenotype code  
+- ```-n``` or ```--name``` flag indicates a formated phenotype name, often used for a title of a plot  
 
 ### Phenotype files
 Phenotype files are obtained from UK Biobank and renamed pheno_(phenotype code).txt. A list of phenotype codes and formatted names for labels are provided in pheno_names.txt
