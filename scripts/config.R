@@ -20,7 +20,7 @@ GWAS_DIR="~/GWAS_Results"       # summary statistics, results, intermediate tabl
 
 ### ENSEMBL annotation files ###
 ENSEMBL="~/ensembl-vep"         # ensembl vep github (https://github.com/Ensembl/ensembl-vep.git)
-ENSEMBL_CACHE="~/cache"         # homo_sapiens_CRCh38.vcf cache
+ENSEMBL_CACHE="~/cache"         # homo_sapiens_CRCh37.vcf cache
 
 ### LDSC files ###
 LDSC_DIR="~/ldsc"               # ldsc github (https://github.com/bulik/ldsc.git)

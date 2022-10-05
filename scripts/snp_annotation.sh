@@ -11,6 +11,8 @@ echo $PHENO
 
 source config.R
 GWAS_DIR=${GWAS_DIR}/$PHENO
+LD_1000G=$LD_1000G
+ENSEMBL_CACHE=$ENSEMBL_CACHE
 mkdir -p $GWAS_DIR/annotation
 cd $SCRATCH/ensembl-vep
 

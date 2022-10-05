@@ -5,11 +5,11 @@ Provided below are instructions and details for scripts used to generate the res
 
 ## Outline:
 1. Download GWAS summary statistics files from [UTBox](https://utexas.box.com/s/ef25198jq6owpcq5j2wq6najovlq75b8)
-2. Download Final_scripts directory which contains scripts and files used to replicate the results and figures
+2. Download [scripts](/scripts) directory which contains scripts and files used to replicate the results and figures
 2. Install software: [plink 1.9](https://www.cog-genomics.org/plink/), [plink 2.0](https://www.cog-genomics.org/plink/2.0/), [ldsc](https://github.com/bulik/ldsc), [Ensembl VEP](https://useast.ensembl.org/info/docs/tools/vep/script/index.html), [mashr](https://github.com/stephenslab/mashr)
-3. Follow file path outline shown below or in directory_outline, (directory names in config.R)
-4. Update configuration file with own file paths: config.R
-5. For each section in Documentation, it is best to follow the code in order
+3. Follow file path outline shown below or in [directory_outline](/directory_outline/), (directory names in [config.R](/scripts/config.R))
+4. Update configuration file with own file paths: [config.R](/scripts/config.R)
+5. Scripts often require items generated from previous scripts, so it is best to follow the documentation in order
 
 ## Software
 *plink v1.9 beta* (Purcell, S. & Chang, C 2021)  
@@ -25,10 +25,12 @@ Ensembl command line *variant effect predictor (VEP) v106* (McLaren et al. 2016)
 
 *mashr* package in R (Urbut, et al. 2019)  
 
+Other *R* packages used are listed in [R_packages](/R_packages.txt)
+
 ## Documentation
 ### General Flags
-- ```-p``` or ```--pheno``` flag indicates the phenotype code  
-- ```-n``` or ```--name``` flag indicates a formated phenotype name, often used for a title of a plot  
+- ```-p``` or ```--pheno``` flag indicates the phenotype code; ex. hip_circ  
+- ```-n``` or ```--name``` flag indicates a formated phenotype name, often used for a title of a plot; ex. Hip circumference  
 
 ### Phenotype files
 Phenotype files are obtained from UK Biobank and renamed pheno_(phenotype code).txt. A list of phenotype codes and formatted names for labels are provided in pheno_names.txt
@@ -39,10 +41,13 @@ Download sex-specific summary statistics from [UTBox](https://utexas.box.com/s/e
 Code Example: ```./manhattan.R -p arm_fatfree_mass_L -n "Arm fat-free mass (L)"```
 <br> <br/>
 ##### SNP annotation for list of SNPs after clumping and thresholding, removing SNPs with p-value>5e-8, pairwise LD threshold r<sup>2</sup>>0.1, or within 250kb  
-In the $LD_1000G directory, download 1000G phase 3 genotype data (all_phase3 files), which were created using the following code:  
+###### 1000G Data  
+In the $LD_1000G directory, download 1000G phase 3 GrCh 37 genotype data ([all_phase3 bfiles](https://www.cog-genomics.org/plink/2.0/resources#phase3_1kg))  
+Download [eur_ids.txt](/intermediate_files/eur_ids.txt), which contains subpopulation codes CEU and GBR to be kept in the sample  
+Filter the bfiles using the following
 ```plink2 --pfile all_phase3 --chr 1-22 --max-alleles 2 --keep eur_ids.txt --rm-dup exclude-all --king-cutoff 0.0442 --make-bed --out all_phase3```  
-eur_ids.txt contained subpopulation codes CEU and GBR on separate lines to be kept in the sample  
-
+###### Ensembl  
+###### Annotation  
 Code Example: ```./snp_annotation.sh -p height```  
 
 ### LD Score regression
@@ -125,6 +130,7 @@ Continue procedure using the following scripts adding the set number to the ```-
 Code Example: ```./mash_setup.R -p height -s 2```  
 Code Example: ```./mash_100.R -p height -s 2```  
 Code Example: ```./mash_posterior.R -p height -s 2```  
+Code Example: ```./lfsr_to_pvalue.R -p height -s 2```  
 
 Clumping and thresholding procedure.  
 Code Example: ```PGS_CT_SCORE_4.sh -p height -s 2```
