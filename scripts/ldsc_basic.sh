@@ -38,6 +38,6 @@ ldsc.py --rg $LD_FILE/${PHENO}_female.sumstats.gz,$LD_FILE/${PHENO}_male.sumstat
 --out $LD_FILE/${PHENO}_male_female
 
 #### grep get heritability and genetic correlation
-grep "h2: " $LD_FILE/*h2.log
-grep "Genetic Correlation: " $LD_FILE/*male_female.log
+#grep "h2: " $LD_FILE/*h2.log
+#grep "Genetic Correlation: " $LD_FILE/*male_female.log
 

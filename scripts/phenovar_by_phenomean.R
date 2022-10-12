@@ -1,26 +1,26 @@
 #!/usr/bin/env Rscript
 
 source("config.R")
-rm(list= ls()[!(ls() %in% c('R_LIB','PHENO_DIR'))])
-library(ggplot2, lib.loc=R_LIB)
-library(ggpubr, lib.loc=R_LIB)
-library(dplyr, lib.loc=R_LIB)
-library(gridExtra, lib.loc=R_LIB)
-library(grid, lib.loc=R_LIB)
-library(ggrepel, lib.loc=R_LIB)
+rm(list = ls()[!(ls() %in% c("R_LIB", "PHENO_DIR"))])
+library(ggplot2, lib.loc = R_LIB)
+library(ggpubr, lib.loc = R_LIB)
+library(dplyr, lib.loc = R_LIB)
+library(gridExtra, lib.loc = R_LIB)
+library(grid, lib.loc = R_LIB)
+library(ggrepel, lib.loc = R_LIB)
 
-# get phenotype names
+# load phenotype names
 setwd(PHENO_DIR)
-pheno_names <- read.csv("pheno_names.txt", sep="\t", colClasses=c(rep("character",2), "NULL"))
+pheno_names <- read.csv("pheno_names.txt", sep = "\t", colClasses = c(rep("character", 2), "NULL"))
 
 #### PHENOTYPE MEAN AND VARIANCE ####
 set.seed(1)
 pheno_stats <- NULL
 pheno_list <- pheno_names$Code    # obtain list of phenotypes
-df_sex <- read.csv("sex_ids.txt", sep="\t")   # obtain list of sex
+df_sex <- read.csv("sex_ids.txt", sep = "\t")   # obtain list of sex
 for (pheno in pheno_list) {
-   df_pheno <- read.csv(paste0("pheno_",pheno,".txt"), sep="\t", colClasses = c("NULL","integer","numeric"))
-   df_pheno <- merge(df_pheno, df_sex, by='IID')    # merge with sex column
+   df_pheno <- read.csv(paste0("pheno_", pheno, ".txt"), sep = "\t", colClasses = c("NULL", "integer", "numeric"))
+   df_pheno <- merge(df_pheno, df_sex, by = "IID")    # merge with sex column
    m <- df_pheno[df_pheno$sex == 1, 2] ; f <- df_pheno[df_pheno$sex == 0, 2]    # split by sex
    # estimate variance and mean by sex
    male_var <- var(m)

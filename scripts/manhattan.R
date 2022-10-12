@@ -29,75 +29,89 @@ if (is.null(opt$pheno) | is.null(opt$name)) {
   stop("Missing argument for phenotype code or name", call.=FALSE)
 }
 pheno <- opt$pheno; print(pheno)
-pheno_name <- opt$name
+pheno_name <- opt$name; print(pheno_name)
 
-setwd( paste0(GWAS_DIR,"/",pheno) )
+# load sex-specific summary statistics
+setwd(paste0(GWAS_DIR, "/", pheno))
 male_name <- paste0("male_all.",pheno,".glm.linear")
 female_name <- paste0("female_all.",pheno,".glm.linear")
 male_df <- read.csv(male_name, sep="\t", colClasses=c(rep("integer",2),"character",rep("NULL",9),"numeric" ))
 female_df <- read.csv(female_name, sep="\t", colClasses=c(rep("integer",2),"character",rep("NULL",9),"numeric" ))
 
+# format summary statistic dataframe
 edit_df <- function(df) {
+  # randomly filter SNPs (reduce more SNPs with higher p-value) for ease of plotting
   for (p in c(5e-30, 5e-20, 5e-10, 5e-5, 0.001, 0.05, 0.75, 0.1, 0.5, 0.7, 0.8)) {
-    df <- bind_rows(filter(df, P<=p), sample_frac(filter(df, P>p), 0.25))
+    df <- bind_rows(filter(df, P <= p), sample_frac(filter(df, P > p), 0.25))
   }
+  # format df for plotting
   plot_df <- df %>%
   drop_na() %>%
   group_by(X.CHROM) %>%
   summarize(CHR_LEN=max(POS)) %>%
   mutate(TOT=cumsum(as.numeric(CHR_LEN))-CHR_LEN) %>%
   select(-CHR_LEN) %>%
-  left_join(df, ., by=c("X.CHROM"="X.CHROM")) %>%
+  left_join(df, ., by = c("X.CHROM" = "X.CHROM")) %>%
   arrange(X.CHROM, POS) %>%
-  mutate(POS_CUM=POS+TOT) %>%
-  mutate(COLOR=ifelse(X.CHROM %% 2, 1,2))
+  mutate(POS_CUM = POS + TOT) %>%
+  mutate(COLOR = ifelse(X.CHROM %% 2, 1,2))
 
   return(plot_df)
 }
 
+# get x-axis labels and positions
 x_axis <- function(plot_df) {
   axis_df <- plot_df %>% 
     group_by(X.CHROM) %>%
-    summarize(CENTER=(max(POS_CUM)+min(POS_CUM))/2 )
+    summarize(CENTER = (max(POS_CUM) + min(POS_CUM)) / 2 )
   return(axis_df)
 }
 
+# return formatted df
 female_df <- edit_df(female_df)
 male_df <- edit_df(male_df)
 axis_df <- x_axis(female_df)
-axis_df$X.CHROM <- c(1:18,"",20,"",22)
 
-pdf(file=paste0(pheno,"_miami.pdf"), width=7, height=3)
+# x-axis labels
+axis_df$X.CHROM <- c(1:18, "", 20, "", 22)
 
-female_plot <- ggplot(female_df, aes(x=POS_CUM,y=-log10(P))) +
-  geom_point( aes(color=as.factor(COLOR)), alpha=0.7, size=0.1) +
-  
-  scale_x_continuous(label=axis_df$X.CHROM, breaks=axis_df$CENTER) +
-  scale_y_continuous(expand=c(0,0)) +
-  
+# pdf file name and dimensions (inches)
+pdf(file = paste0(pheno, "_miami.pdf"), width = 7, height = 3)
+
+# female plot
+female_plot <- ggplot(female_df, aes(x = POS_CUM, y = -log10(P))) +
+  geom_point(aes(color = as.factor(COLOR)), alpha = 0.7, size = 0.1) +
+  # axis scales and labels
+  scale_x_continuous(label = axis_df$X.CHROM, breaks = axis_df$CENTER) +
+  scale_y_continuous(expand = c(0, 0)) +
+  # theme
   theme_pubclean() +
   theme(legend.position = "none", axis.title = element_blank(), plot.margin = margin(20,5.5,0,5.5),
-        axis.text = element_text(size=9), panel.grid.major.y=element_blank(), plot.title=element_text(size=16, hjust=0.5)) +
+        axis.text = element_text(size = 9), panel.grid.major.y = element_blank(), 
+        plot.title = element_text(size = 6, hjust = 0.5)) +
+  # colors
   scale_color_manual(values=c("#d67629","#1d47a1")) +
+  # labels
   labs(title=pheno_name) +
-  annotation_custom(grobTree(textGrob("female", x=0.1, y=0.9, gp = gpar(col="#d67629", fontsize=11) )))
+  annotation_custom(grobTree(textGrob("female", x = 0.1, y = 0.9,
+        gp = gpar(col="#d67629", fontsize=11))))
 
-male_plot <- ggplot(male_df, aes(x=POS_CUM,y=-log10(P))) +
-  geom_point( aes(color=as.factor(COLOR)), alpha=0.7, size=0.1) +
-  
-  scale_x_continuous(label=axis_df$X.CHROM, breaks=axis_df$CENTER) +
-  scale_y_reverse(expand=c(0,0)) +
-  
+# male plot
+male_plot <- ggplot(male_df, aes(x = POS_CUM, y = -log10(P))) +
+  geom_point(aes(color = as.factor(COLOR)), alpha = 0.7, size = 0.1) +
+  scale_x_continuous(label = axis_df$X.CHROM, breaks = axis_df$CENTER) +
+  scale_y_reverse(expand = c(0, 0)) +
   theme_pubclean() + 
-  theme(legend.position = "none",  axis.text.x=element_blank(), axis.ticks.x = element_blank(), 
-        plot.margin =  margin(0,5.5,40,5.5), panel.grid.major.y=element_blank(), 
-        axis.text.y = element_text(size=9), axis.title.y = element_blank(), axis.title.x = element_text(size=11)) +
-  scale_color_manual(values=c("#d67629","#1d47a1")) +
-  labs(x="Chromosome") +
-  annotation_custom(grobTree(textGrob("male", x=0.1, y=0.1, gp = gpar(col="#207335", fontsize=11) )))
+  theme(legend.position = "none",  axis.text.x = element_blank(), axis.ticks.x = element_blank(), 
+        plot.margin =  margin(0,5.5,40,5.5), panel.grid.major.y = element_blank(), 
+        axis.text.y = element_text(size = 9), axis.title.y = element_blank(), axis.title.x = element_text(size = 11)) +
+  scale_color_manual(values = c("#d67629", "#1d47a1")) +
+  labs(x = "Chromosome") +
+  annotation_custom(grobTree(textGrob("male", x = 0.1, y = 0.1,
+        gp = gpar(col = "#207335", fontsize = 11))))
 
-p <- grid.arrange(female_plot, male_plot, nrow = 2, left=textGrob(bquote(-log[10] ~P), rot=90, vjust=1, gp=gpar(fontsize=11)))
+p <- grid.arrange(female_plot, male_plot, nrow = 2,
+      left = textGrob(bquote(-log[10] ~P), rot = 90, vjust = 1, gp = gpar(fontsize = 11)))
 p
 
 dev.off()
-

@@ -8,13 +8,17 @@ $GWAS_DIR
   simulation_matrix_k_15k.RData
   simulation_matrix_k_20k.RData
   matrice_names.txt
+
   [phenotype code]
     male_all.[phenotype code].glm.linear
     female_all.[phenotype code].glm.linear
     both_sex_all.[phenotype code].glm.linear
+    [phenotype code]_miami.pdf # plot
+
     annotation
+        [sex]_[phenotype code].clumped
         [sex]_[phenotype code].clumped.ids
-        [sex]_phenotype code]_annotation.txt
+        [sex]_[phenotype code]_annotation.txt
     mash
         [phenotype code]_mash.RData
         [phenotype code]_mixprop_100_all.txt
@@ -36,8 +40,10 @@ $GWAS_DIR
     PGS_3
     PGS_4
     PGS_5
+
 $QC_DIR
     maf_sample_20k.txt
+
 $PHENO_DIR
     pheno_[phenotype code].txt 
     QC_ids.txt
@@ -46,26 +52,36 @@ $PHENO_DIR
     pheno_meanvar.txt
     FIG4a_phenovar_phenomean.pdf
     FIG4b_phenovar_amplification.pdf
+
 $ENSEMBL
-  ensembl software
+  # ensembl software
+  
 $ENSEMBL_CACHE
+  # human genome assembly GRCh37 cache
 
 $LDSC_DIR
-  #ldsc software
+  # ldsc software
+
 $LDSC_FILE
   ldsc_results.txt
   relative_h2.txt
+  FIG1.r2_by_h2.pdf
+  #
   [phenotype code]
-    [phenotype code]_[sex]_h2.log
-    [phenotype code]_male_female.log
+    [phenotype code]_[sex].sumstats.gz    # reformatted summary statistics
+    [phenotype code]_[sex]_h2.log         # heritability
+    [phenotype code]_male_female.log      # genetic correlation
+
 $LD_SCORE
   eur_w_ld_chr
   w_hm3.snplist
+
 $LD_1000G
   all_phase3.bed
   all_phase3.bim
   all_phase3.fam
   eur_ids.txt
+
 $SEL_DIR
   fst_plot_testosterone.1e-05.RData
   fst_plot_protein_total.1e-05.RData

@@ -37,31 +37,34 @@ Phenotype files are obtained from UK Biobank and renamed pheno_(phenotype code).
 
 ### Single snp analysis
 ##### Miami plots from GWAS summary statistics estimated in males and females only
-Download sex-specific summary statistics from [UTBox](https://utexas.box.com/s/ef25198jq6owpcq5j2wq6najovlq75b8) in the corresponding $GWAS_DIR/[phenotype code] folder. 
+Download sex-specific summary statistics from [UTBox](https://utexas.box.com/s/ef25198jq6owpcq5j2wq6najovlq75b8) to the corresponding $GWAS_DIR/[phenotype code] folder. 
+Create miami plot. 
 Code Example: ```./manhattan.R -p arm_fatfree_mass_L -n "Arm fat-free mass (L)"```
 <br> <br/>
 ##### SNP annotation for list of SNPs after clumping and thresholding, removing SNPs with p-value>5e-8, pairwise LD threshold r<sup>2</sup>>0.1, or within 250kb  
 ###### 1000G Data  
-In the $LD_1000G directory, download 1000G phase 3 GrCh 37 genotype data ([all_phase3 bfiles](https://www.cog-genomics.org/plink/2.0/resources#phase3_1kg))  
+In the $LD_1000G directory, download 1000G phase 3 GrCh 37 genotype data ([all_phase3 bfiles](https://www.cog-genomics.org/plink/2.0/resources#phase3_1kg)) to $LD_1000G  
 Download [eur_ids.txt](/intermediate_files/eur_ids.txt), which contains subpopulation codes CEU and GBR to be kept in the sample  
 Filter the bfiles using the following
 ```plink2 --pfile all_phase3 --chr 1-22 --max-alleles 2 --keep eur_ids.txt --rm-dup exclude-all --king-cutoff 0.0442 --make-bed --out all_phase3```  
-###### Ensembl  
 ###### Annotation  
+Generate list of annotations after clumping  
 Code Example: ```./snp_annotation.sh -p height```  
 
 ### LD Score regression
 ##### Estimate heritability and genetic correlation from sex-specific GWAS summary statistics
 Download the pre-computed LD scores from the [ldsc tutorial](https://github.com/bulik/ldsc) (Bulik-Sullivan et al. 2015) to $LD_SCORE.  
+Estimate heritability and genetic correlation  
 Code Example: ```./ldsc_basic.sh -p height``` 
 
 #### Create plot for Figure 1
-Download ldsc_results.txt to $LDSC_FILE, which contains sex-specific heritability estimates and male-female genetic correlations, estimated in the previous step.  
+Download [ldsc_results.txt](/intermediate_files/ldsc_results.txt) to $LDSC_FILE, which contains all the sex-specific heritability estimates and male-female genetic correlations, estimated in the previous step.  
 relative_h2.txt, which is used in nontrivial.R, is created in this step and placed in $LD_FILE
 Code: ```./r2_by_h2.R```
 
 ### Multivariate adaptive shrinkage (mashr)
-The ```-s``` or ```--set``` flag may be used in the three scripts below. The flag indicates whether or not to produce results specifically for the polygenic score pipeline (**Text S1**), which uses a smaller sample size for the cross-validation procedure. Use the flag and input the set number [1-5] only if performing the PGS pipeline, otherwise do not use the flag. 
+The ```-s``` or ```--set``` flag may be used in the three scripts below. The flag indicates whether or not to produce results specifically for the polygenic score pipeline (**Text S1**), which uses a smaller sample size for the cross-validation procedure. Use the flag and input the set number [1-5] only if using the PGS pipeline, otherwise do not use the flag. 
+The below examples generate mixture weights and posterior estimates.  
 
 Read in the data to create a matrix of effect estimates and standard errors by sex from sex-specific GWAS summary statistics.  
 Code Example: ```./mash_setup.R -p height```
@@ -73,10 +76,10 @@ Compute posterior estimates: posterior mean, standard deviation, weight, and lfs
 Code Example: ```./mash_posterior.R -p height```
 
 #### Plots using mixture weights
-Create a overall and compact heatmaps of mixture weights. Plots for **Fig. S4**.   
+Create overall and compact heatmaps of mixture weights. Plots for **Fig. S4**.   
 Code Example: ```./mash_heatmap.R -p height -n Height```
 
-Plot for **Fig. 4A**.  Download pheno_names.txt to $PHENO_DIR. Create a text file names sex_ids.txt with two columns [IID, sex], which contains the IIDs and corresponding sex in (0,1) format.
+Plot for **Fig. 4A**.  Download [pheno_names.txt](/intermediate_files/pheno_names.txt) to $PHENO_DIR. Create a text file named sex_ids.txt with two columns, ["IID", "sex"], which contains the sample IIDs and corresponding sex in (0,1) format.
 Code: ```./phenovar_by_phenomean.R```
 
 Plot for **Fig. 4B**. Download mash_weights.txt to $GWAS_DIR, which summarizes weights from all traits.  
