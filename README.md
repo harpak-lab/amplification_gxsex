@@ -124,16 +124,16 @@ Code Example: ```environ_heatmap.R```
 
 ### Polygenic Score  
 Create 20 test sets to be used for cross validation. This step will create folders PGS_1-20 and place a test set in each folder.  
-Create a file, QC_ids.txt, containing all the sample IDs in one column, with column title 'IID', and move to $PHENO_DIR. The sample IDs are obtained after performing sample quality checks on UK Biobank data. The quality checks are further detailed in [QC.sh](/scripts/QC.sh). 
+Create a file, QC_ids.txt, containing all the sample IDs in one column, with column title 'IID', and move to $PHENO_DIR. The sample IDs are obtained after performing sample quality checks on UK Biobank data. The quality checks are further detailed in [QC.sh](/scripts/QC.sh).  
 Code Example: ```PGS_testset_1.R -p height```
 
 For the additive, standardized by sex model, first perform within sex standardization for each phenotype. These files will have a _std suffix.  
 Code Example: ```standardize_pheno.R -p height```
 
-For the following four scripts, provide the set (cross-fold) number [1-20] with the ```-s``` flag.  
+For the following scripts, provide the set (cross-fold) number [1-20] with the ```-s``` flag.  
 
 Generate sex-specific GWAS summary statistics estimated in both sexes and sexes separately.
-You will need quality checked genotype files (from [QC.sh](/scripts/QC.sh)) labeled ukb_imp_chr(1-22)_v3_11. This requires UK Biobank access.  
+You will need quality checked genotype files (from [QC.sh](/scripts/QC.sh)) labeled ukb_imp_chr(1-22)_v3_11. The covariate file contains the FID, IID, first 10 PCs, sex, and birth year. This requires UK Biobank access.  
 Code Example: ```PGS_GWAS_2.sh -p height -s 1```
 
 Continue procedure using the following scripts adding the set number to the ```-s``` flag:  
@@ -145,19 +145,25 @@ Code Example: ```./lfsr_to_pvalue.R -p height -s 2```
 Clumping and thresholding procedure. Download range_list.txt to the directory your scripts are located. These contain the p-value ranges for the CT procedure.  
 Code Example: ```PGS_CT_score_4.sh -p height -s 2```
 
-########################## TODO ##############################
-Print out predictions using PGS based on four models described in **Text S8**.   
-Code Example: ```PGS_predict_5_linear.R -p height -s 2```
+Print out predictions using PGS based on four models described in **Text S8**. The result will output in the $GWAS_DIR/[phenotype code]/PGS_1 folder. It will include columns for the R2, incremental R2, and model (add=additive, both-sex; as=additive, standardized by sex; ss=sex-specific, covariance-naive; and mash=sex-specific, covariance-aware). Along with the .profile files, you will need the phenotype and covariate files.  
+Code Example: ```PGS_predict_20.R -p height -s 2```
 
 #### Plots
-Plot for **Fig. S14**. Download pgs_linear_results_five.txt, which provides a summary of correlations from the script before. pgs_combined_r2.txt is outputted.  
-Code: ```PGS_plot_final.R```
+Plot for **Fig. S12**. Download [pgs_20.txt](/intermediate_files/PGS_20.txt) to $GWAS_DIR, which provides a summary of means and standard errors of the PGS results for all phenotypes from the script above.   
+Code: ```PGS_plot.R```
 
-Plot for **Fig. S16**. Move the best .profile file (female_additive..., male_additive..., male_mash..., female_mash..., both_sex_additive...) from set 1 to $GWAS_dir/[pheno_code] as printed by PGS_predict_5_linear.R. There should be a total of 5 .profile files for each phenotype in pheno_names.txt.    
+########################## TODO ##############################
+Plot for **Fig. 2A-H and S11**. Move the best .profile file (female_additive..., male_additive..., male_mash..., female_mash..., both_sex_additive...) from set 1 to $GWAS_DIR/[phenotype code]. There should be a total of 5 .profile files for each phenotype in pheno_names.txt.    
 Code: ```pheno_pgs.R```
+Note: We used a 5 fold cross validation for this script and the scripts in "Testosterone as an modulator of amplification" section, with a 50K total test set. 
 
 Plot for **Fig. 2I,J**. This script uses sexspecific_pheno_pgs_lm.txt which is produced in the script before. The Spearman correlation between the male and females panels is printed out.  
 Code: ```pheno_pgs_overall.R```
+
+######## TODO ########
+Plot for **Fig. 4B**. Download [PGS_20_all.txt](/intermediate_files/pgs_20_all.txt).  
+Code: ```pgs_20_utility.R```
+
 
 ### Testosterone as an modulator of amplification
 Plots for **Fig. S9,10**. If using PGS estimated from sex-specific summary statistics (**Fig. S10**), input 'sex-specific' for the ```-m``` or ```--mode``` flag. Otherwise, do not use that flag.  
@@ -176,7 +182,7 @@ Plot for **Fig. S12**.
 Code: ```G_corr_testosterone_age.R```
 
 ### Model of shared amplification
-Plot for **Fig. 6**.  This script uses pheno_meanvar.txt, which was produce in phenovar_by_phenomean.R. Download ldsc_results.txt, if not already.  
+Plot for **Fig. 6**.  This script uses pheno_meanvar.txt, which was produced in phenovar_by_phenomean.R. Download ldsc_results.txt, if not already.  
 Code: ```gen_env_bootstrap.R```
 
 ### Sexually-Antagonistic Selection

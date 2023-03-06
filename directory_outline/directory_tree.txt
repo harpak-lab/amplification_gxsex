@@ -8,12 +8,14 @@ $GWAS_DIR
   simulation_matrix_k_15k.RData
   simulation_matrix_k_20k.RData
   matrice_names.txt
+  pgs_20.txt
+  PGS_20_plot.pdf
 
   [phenotype code]
     male_all.[phenotype code].glm.linear
     female_all.[phenotype code].glm.linear
     both_sex_all.[phenotype code].glm.linear
-    [phenotype code]_miami.pdf # plot
+    [phenotype code]_miami.pdf 
 
     annotation
         [sex]_[phenotype code].clumped
@@ -39,13 +41,14 @@ $GWAS_DIR
         [sex]_pseudoP_pgs.[phenotype code].txt
         [sex]_[pgs model].[phenotype code].clumped.snpid
         [sex]_[pgs model].[phenotype code].snp_pvalue
-
+        [phenotype code]_PGS20.txt    # r2 results for all 20 folds
     PGS_...
     PGS_20
 
 $QC_DIR
     maf_sample_20k.txt
-    ukb_imp_chr(1-22)_v3_11
+    ukb_imp_chr(1-22)_v3_11   #pfiles
+    ukb_imp_all_v3_11   #pfiles
 
 $PHENO_DIR
     pheno_[phenotype code].txt 

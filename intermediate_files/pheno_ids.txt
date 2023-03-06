@@ -1,4 +1,9 @@
-Data_field	Code
+# this file contains the phenotype codes and the associated UK Biobank field ID. The covariates field IDs are as follows:
+# birth year: 34
+# genetic sex: 22001
+# First 10 PCs: 22009.1-22009.10
+
+FieldID	Code
 23479	albumin
 23125	arm_fatfree_mass_L
 23121	arm_fatfree_mass_R
