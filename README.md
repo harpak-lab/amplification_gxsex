@@ -38,7 +38,7 @@ Phenotype files are obtained from UK Biobank and renamed pheno_(phenotype code).
 ### Single snp analysis
 ##### Miami plots from GWAS summary statistics estimated in males and females only
 Download sex-specific summary statistics from [Zenodo (10.5281/zenodo.7222725)](https://doi.org/10.5281/zenodo.7222725) to the corresponding $GWAS_DIR/[phenotype code] folder. 
-Create miami plot. 
+Create miami plot.  
 Code Example: ```./manhattan.R -p arm_fatfree_mass_L -n "Arm fat-free mass (L)"```
 <br> <br/>
 ##### SNP annotation for list of SNPs after clumping and thresholding, removing SNPs with p-value>5e-8, pairwise LD threshold r<sup>2</sup>>0.1, or within 250kb  
@@ -59,7 +59,7 @@ Code Example: ```./ldsc_basic.sh -p height```
 
 #### Create plot for Figure 1
 Download [ldsc_results.txt](/intermediate_files/ldsc_results.txt) to $LDSC_FILE, which contains all the sex-specific heritability estimates and male-female genetic correlations, estimated in the previous step.  
-relative_h2.txt, which is used in nontrivial.R, is created in this step and placed in $LD_FILE
+relative_h2.txt, which is used in nontrivial.R, is created in this step and placed in $LD_FILE. 
 Code: ```./r2_by_h2.R```
 
 ### Multivariate adaptive shrinkage (mashr)
@@ -79,14 +79,14 @@ Code Example: ```./mash_posterior.R -p height```
 Create overall and compact heatmaps of mixture weights. Plots for **Data S1-27**.   
 Code Example: ```./mash_heatmap.R -p height -n Height```
 
-Plot for **Fig. S8**.  Download [pheno_names.txt](/intermediate_files/pheno_names.txt) to $PHENO_DIR. Create a text file named sex_ids.txt with two columns, ["IID", "sex"], which contains all the sample IIDs and corresponding sex in (0,1) format.
+Plot for **Fig. S8**.  Download [pheno_names.txt](/intermediate_files/pheno_names.txt) to $PHENO_DIR. Create a text file named sex_ids.txt with two columns, ["IID", "sex"], which contains all the sample IIDs and corresponding sex in (0,1) format.  
 Code: ```./phenovar_by_phenomean.R```
 
 Plot for **Fig. 4A**. Download [mash_weights.txt](/intermediate_files/mash_weights.txt) to $GWAS_DIR, which summarizes weights from all traits.  
 Code: ```./phenovar_by_amplification.R```
 
 Plot for **Fig. S7**  
-This script uses mash_weights.txt and pheno_names.txt. 
+This script uses mash_weights.txt and pheno_names.txt.  
 Code: ```nontrivial.R```
 
 #### Test different p-value threshold (Methods and Fig. S3)
@@ -103,8 +103,8 @@ Code Example: ```mash_pvalue_null_plot.R``` or ```mash_pvalue_null_plot.R -m _sa
 
 #### Environmental variance simulation for *mash*
 ##### Create a matrix of 30K individuals and 20K genotypes. 
-In $QC_DIR, Download maf_sample_20k.txt, which contains a random sample of 20K mean allele frequencies from UK Biobank [Resource 1967](https://biobank.ndph.ox.ac.uk/ukb/refer.cgi?id=1967).
-This script creates simulation_matrix_k_5k.RData, simulation_matrix_k_10k.RData, simulation_matrix_k_15k.RData, and simulation_matrix_k_20k.RData.
+In $QC_DIR, Download maf_sample_20k.txt, which contains a random sample of 20K mean allele frequencies from UK Biobank [Resource 1967](https://biobank.ndph.ox.ac.uk/ukb/refer.cgi?id=1967).  
+This script creates simulation_matrix_k_5k.RData, simulation_matrix_k_10k.RData, simulation_matrix_k_15k.RData, and simulation_matrix_k_20k.RData.  
 Code: ```environ_matrix.R```
 
 Estimate effect sizes and standard errors for input into mash. Flags ```-i```, ```-g```. and ```-e```, indicate parameters for number of causal SNPs, heritability, and female to male environmental variance ratio. We used the following parameters:  
@@ -116,7 +116,7 @@ Code Example: ```environ_small.R -i 100 -g 0.5 -e 1.5```
 Same as the one above, but only for a causal SNP sample size of 10k. Flags ```-g``` and ```-e``` are the same, and there is no ```-i```.   
 Code Example: ```environ_large.R -g 0.05 -e 5```
 
-*mash* fitting procedure to test if differences in environmental variance are captured. Results for all parameters from the previous two scripts are required before running this script. The results we obtained are posted in [intermediate_files](/intermediate_files/environ_var_sim/) and are used for plotting. 
+*mash* fitting procedure to test if differences in environmental variance are captured. Results for all parameters from the previous two scripts are required before running this script. The results we obtained are posted in [intermediate_files](/intermediate_files/environ_var_sim/) and are used for plotting.  
 Code: ```environ_mash.R```
 
 Produce heatmap plots as depicted in **Fig. S5**. Download matrice_names.txt, which is a list of all hypothesis covariance matrices used, to $GWAS_DIR.  
@@ -124,16 +124,16 @@ Code Example: ```environ_heatmap.R```
 
 ### Polygenic Score  
 Create 20 test sets to be used for cross validation. This step will create folders PGS_1-20 and place a test set in each folder.  
-Create a file, QC_ids.txt, containing all the sample IDs in one column, with column title 'IID', and move to $PHENO_DIR. The sample IDs are obtained after performing sample quality checks on UK Biobank data. The quality checks are further detailed in [QC.sh](/scripts/QC.sh)
+Create a file, QC_ids.txt, containing all the sample IDs in one column, with column title 'IID', and move to $PHENO_DIR. The sample IDs are obtained after performing sample quality checks on UK Biobank data. The quality checks are further detailed in [QC.sh](/scripts/QC.sh). 
 Code Example: ```PGS_testset_1.R -p height```
 
-For the additive, standardized by sex model, first perform within sex standardization for each phenotype. These files will have a _std suffix. 
+For the additive, standardized by sex model, first perform within sex standardization for each phenotype. These files will have a _std suffix.  
 Code Example: ```standardize_pheno.R -p height```
 
 For the following four scripts, provide the set (cross-fold) number [1-20] with the ```-s``` flag.  
 
 Generate sex-specific GWAS summary statistics estimated in both sexes and sexes separately.
-You will need quality checked genotype files (from [QC.sh](/scripts/QC.sh)) labeled ukb_imp_chr(1-22)_v3_11. This requires UK Biobank access. 
+You will need quality checked genotype files (from [QC.sh](/scripts/QC.sh)) labeled ukb_imp_chr(1-22)_v3_11. This requires UK Biobank access.  
 Code Example: ```PGS_GWAS_2.sh -p height -s 1```
 
 Continue procedure using the following scripts adding the set number to the ```-s``` flag:  
@@ -142,7 +142,7 @@ Code Example: ```./mash_100.R -p height -s 2```
 Code Example: ```./mash_posterior.R -p height -s 2```  
 Code Example: ```./lfsr_to_pvalue.R -p height -s 2```  
 
-Clumping and thresholding procedure. Download range_list.txt to the directory your scripts are located. These contain the p-value ranges for the CT procedure. 
+Clumping and thresholding procedure. Download range_list.txt to the directory your scripts are located. These contain the p-value ranges for the CT procedure.  
 Code Example: ```PGS_CT_score_4.sh -p height -s 2```
 
 ########################## TODO ##############################
