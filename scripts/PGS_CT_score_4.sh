@@ -11,14 +11,14 @@ echo $PHENO; echo $SET
 
 PGS_DIR=$GWAS_DIR/$PHENO/PGS_$SET
 
-# thresholds to use
-echo "1 0 1" > range_list 
-echo "0.01 0 0.01" >> range_list
-echo "1e-5 0 1e-5" >> range_list
-echo "1e-8 0 1e-8" >> range_list
+## thresholds to use
+# echo "1 0 1" > range_list 
+# echo "0.01 0 0.01" >> range_list
+# echo "1e-5 0 1e-5" >> range_list
+# echo "1e-8 0 1e-8" >> range_list
 
 ### ADDITIVE ###
-declare -a arr=("both_sex" "female" "male")
+declare -a arr=("both_sex" "both_sex_std" "female" "male")
 for sex in "${arr[@]}"
 do
     # clumping of base data

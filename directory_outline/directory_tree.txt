@@ -36,13 +36,16 @@ $GWAS_DIR
         [phenotype code]_mash_psd.txt
         [phenotype code]_mash_lfsr.txt
         [phenotype code]_mash_weights.txt
-    PGS_2
-    PGS_3
-    PGS_4
-    PGS_5
+        [sex]_pseudoP_pgs.[phenotype code].txt
+        [sex]_[pgs model].[phenotype code].clumped.snpid
+        [sex]_[pgs model].[phenotype code].snp_pvalue
+
+    PGS_...
+    PGS_20
 
 $QC_DIR
     maf_sample_20k.txt
+    ukb_imp_chr(1-22)_v3_11
 
 $PHENO_DIR
     pheno_[phenotype code].txt 

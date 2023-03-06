@@ -2,7 +2,7 @@
 
 # STEP 3: TEST EVIDENCE OF ENVIRONMENTAL VARIANCE IN MASH
 source("config.R")
-rm(list= ls()[!(ls() %in% c('R_LIB','GWAS_DIR','QC_DIR'))])
+rm(list= ls()[!(ls() %in% c('R_LIB','GWAS_DIR'))])
 library(optparse, lib.loc=R_LIB)
 library(ashr, lib.loc=R_LIB)
 library(mashr, lib.loc=R_LIB)

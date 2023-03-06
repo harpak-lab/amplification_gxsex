@@ -18,7 +18,6 @@ if (is.null(opt$pheno)) {
   print_help(opt_parser)
   stop("Missing argument for phenotype code", call.=FALSE)
 }
-pheno
 pheno <- opt$pheno
 
 # load LD scores and set working directory

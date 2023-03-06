@@ -1,13 +1,13 @@
 # Amplification is the Primary Mode of Gene-by-Sex Interaction in Complex Human Traits
-Carrie Zhu, Matthew J. Ming, Jared M. Cole, Mark Kirkpatrick, Arbel Harpak
+Carrie Zhu, Matthew J. Ming, Jared M. Cole, Michael D. Edge, Mark Kirkpatrick, Arbel Harpak
 
 Provided below are instructions and details for scripts used to generate the results and figures in ["Amplification is the Primary Mode of Gene-by-Sex Interaction in Complex Human Traits"](https://www.biorxiv.org/content/10.1101/2022.05.06.490973v1).
 
 ## Outline:
-1. Download GWAS summary statistics files from [UTBox](https://utexas.box.com/s/ef25198jq6owpcq5j2wq6najovlq75b8)
+1. Download GWAS summary statistics files from Zenodo - [additive (10.5281/zenodo.7508246)](https://doi.org/10.5281/zenodo.7508246) and [sex-specific (10.5281/zenodo.7222725)](https://doi.org/10.5281/zenodo.7222725)
 2. Download [scripts](/scripts) directory which contains scripts and files used to replicate the results and figures
 2. Install software: [plink 1.9](https://www.cog-genomics.org/plink/), [plink 2.0](https://www.cog-genomics.org/plink/2.0/), [ldsc](https://github.com/bulik/ldsc), [Ensembl VEP](https://useast.ensembl.org/info/docs/tools/vep/script/index.html), [mashr](https://github.com/stephenslab/mashr)
-3. Follow file path outline shown below or in [directory_outline](/directory_outline/), (directory names in [config.R](/scripts/config.R))
+3. Follow file path outline shown in [directory_outline](/directory_outline/), (directory names in [config.R](/scripts/config.R))
 4. Update configuration file with own file paths: [config.R](/scripts/config.R)
 5. Scripts often require items generated from previous scripts, so it is best to follow the documentation in order
 
@@ -33,11 +33,11 @@ Other *R* packages used are listed in [R_packages](/R_packages.txt)
 - ```-n``` or ```--name``` flag indicates a formated phenotype name, often used for a title of a plot; ex. Hip circumference  
 
 ### Phenotype files
-Phenotype files are obtained from UK Biobank and renamed pheno_(phenotype code).txt. A list of phenotype codes and formatted names for labels are provided in pheno_names.txt
+Phenotype files are obtained from UK Biobank and renamed pheno_(phenotype code).txt. A list of phenotype codes and formatted names for labels are provided in pheno_names.txt. A list of phenotype codes and UKBB data fields are provided in pheno_ids.txt
 
 ### Single snp analysis
 ##### Miami plots from GWAS summary statistics estimated in males and females only
-Download sex-specific summary statistics from [UTBox](https://utexas.box.com/s/ef25198jq6owpcq5j2wq6najovlq75b8) to the corresponding $GWAS_DIR/[phenotype code] folder. 
+Download sex-specific summary statistics from [Zenodo (10.5281/zenodo.7222725)](https://doi.org/10.5281/zenodo.7222725) to the corresponding $GWAS_DIR/[phenotype code] folder. 
 Create miami plot. 
 Code Example: ```./manhattan.R -p arm_fatfree_mass_L -n "Arm fat-free mass (L)"```
 <br> <br/>
@@ -63,7 +63,7 @@ relative_h2.txt, which is used in nontrivial.R, is created in this step and plac
 Code: ```./r2_by_h2.R```
 
 ### Multivariate adaptive shrinkage (mashr)
-The ```-s``` or ```--set``` flag may be used in the three scripts below. The flag indicates whether or not to produce results specifically for the polygenic score pipeline (**Text S1**), which uses a smaller sample size for the cross-validation procedure. Use the flag and input the set number [1-5] only if using the PGS pipeline, otherwise do not use the flag. 
+The ```-s``` or ```--set``` flag may be used in the three scripts below. The flag indicates whether or not to produce results specifically for the polygenic score pipeline (**Text S8**), which uses a smaller sample size for the cross-validation procedure. Use the flag and input the set number [1-20] only if using the PGS pipeline, otherwise do not use the flag. 
 The below examples generate mixture weights and posterior estimates.  
 
 Read in the data to create a matrix of effect estimates and standard errors by sex from sex-specific GWAS summary statistics.  
@@ -76,33 +76,35 @@ Compute posterior estimates: posterior mean, standard deviation, weight, and lfs
 Code Example: ```./mash_posterior.R -p height```
 
 #### Plots using mixture weights
-Create overall and compact heatmaps of mixture weights. Plots for **Fig. S4**.   
+Create overall and compact heatmaps of mixture weights. Plots for **Data S1-27**.   
 Code Example: ```./mash_heatmap.R -p height -n Height```
 
-Plot for **Fig. 4A**.  Download [pheno_names.txt](/intermediate_files/pheno_names.txt) to $PHENO_DIR. Create a text file named sex_ids.txt with two columns, ["IID", "sex"], which contains the sample IIDs and corresponding sex in (0,1) format.
+Plot for **Fig. S8**.  Download [pheno_names.txt](/intermediate_files/pheno_names.txt) to $PHENO_DIR. Create a text file named sex_ids.txt with two columns, ["IID", "sex"], which contains all the sample IIDs and corresponding sex in (0,1) format.
 Code: ```./phenovar_by_phenomean.R```
 
-Plot for **Fig. 4B**. Download mash_weights.txt to $GWAS_DIR, which summarizes weights from all traits.  
+Plot for **Fig. 4A**. Download [mash_weights.txt](/intermediate_files/mash_weights.txt) to $GWAS_DIR, which summarizes weights from all traits.  
 Code: ```./phenovar_by_amplification.R```
 
 Plot for **Fig. S7**  
+This script uses mash_weights.txt and pheno_names.txt. 
 Code: ```nontrivial.R```
 
 #### Test different p-value threshold (Methods and Fig. S3)
 The ```-m``` or ```--mode``` flag may be used in the three scripts below. To keep the same random sample size for input to *mash*, use the flag, with the parameter '_same'. Otherwise, do not use the flag. 
 
-```./mash_setup.R``` needs to be run first for the same trait.  
+```./mash_setup.R``` needs to be run first for the trait.  
 Code Example: ```mash_p_threshold.R -p height``` or ```mash_p_threshold.R -p height -m _same```  
 
-Plots for **Fig. S3B**.  
+Plots for **Fig. S4**.  
 Code Example: ```mash_pvalue_plot.R -p height -n Height``` or ```mash_pvalue_plot.R -p height -n Height -m _same```  
 
-Plots for **Fig. S3A**. In $GWAS_DIR, Download noeffect_weight.txt and noeffect_weight_same.txt, which has the weight on the no effect matrix for each phenotype and p-value threshold used in this particular analysis.  
+Plots for **Fig. S4**. In $GWAS_DIR, Download noeffect_weight.txt and noeffect_weight_same.txt, which has the weight on the no effect matrix for each phenotype and p-value threshold used in this particular analysis.  
 Code Example: ```mash_pvalue_null_plot.R``` or ```mash_pvalue_null_plot.R -m _same```  
 
 #### Environmental variance simulation for *mash*
 ##### Create a matrix of 30K individuals and 20K genotypes. 
-In $QC_DIR, Download maf_sample_20k.txt, which contained a random sample of 20K mean allele frequencies from UK Biobank [Resource 1967](https://biobank.ndph.ox.ac.uk/ukb/refer.cgi?id=1967).  
+In $QC_DIR, Download maf_sample_20k.txt, which contains a random sample of 20K mean allele frequencies from UK Biobank [Resource 1967](https://biobank.ndph.ox.ac.uk/ukb/refer.cgi?id=1967).
+This script creates simulation_matrix_k_5k.RData, simulation_matrix_k_10k.RData, simulation_matrix_k_15k.RData, and simulation_matrix_k_20k.RData.
 Code: ```environ_matrix.R```
 
 Estimate effect sizes and standard errors for input into mash. Flags ```-i```, ```-g```. and ```-e```, indicate parameters for number of causal SNPs, heritability, and female to male environmental variance ratio. We used the following parameters:  
@@ -114,19 +116,24 @@ Code Example: ```environ_small.R -i 100 -g 0.5 -e 1.5```
 Same as the one above, but only for a causal SNP sample size of 10k. Flags ```-g``` and ```-e``` are the same, and there is no ```-i```.   
 Code Example: ```environ_large.R -g 0.05 -e 5```
 
-*mash* fitting procedure to test if differences in environmental variance is captured. Results for all parameters from the previous two scripts are required before running this script.  
+*mash* fitting procedure to test if differences in environmental variance are captured. Results for all parameters from the previous two scripts are required before running this script. The results we obtained are posted in [intermediate_files](/intermediate_files/environ_var_sim/) and are used for plotting. 
 Code: ```environ_mash.R```
 
-Produce heatmap plots as depicted in **Fig. S6**. Download matrice_names.txt, which is a list of all hypothesis covariance matrices used, to $GWAS_DIR.  
+Produce heatmap plots as depicted in **Fig. S5**. Download matrice_names.txt, which is a list of all hypothesis covariance matrices used, to $GWAS_DIR.  
 Code Example: ```environ_heatmap.R```
 
 ### Polygenic Score  
-Create five test sets to be used for cross validation. This step will create folders PGS_1-5 and place a test set in each folder.  Download QC_ids.txt to $PHENO_DIR.  
+Create 20 test sets to be used for cross validation. This step will create folders PGS_1-20 and place a test set in each folder.  
+Create a file, QC_ids.txt, containing all the sample IDs in one column, with column title 'IID', and move to $PHENO_DIR. The sample IDs are obtained after performing sample quality checks on UK Biobank data. The quality checks are further detailed in [QC.sh](/scripts/QC.sh)
 Code Example: ```PGS_testset_1.R -p height```
 
-For the following four scripts, provide the set number [1-5] with the ```-s``` flag.  
+For the additive, standardized by sex model, first perform within sex standardization for each phenotype. These files will have a _std suffix. 
+Code Example: ```standardize_pheno.R -p height```
 
-Generate sex-specific GWAS summary statistics estimated in both sexes and sexes separately.  
+For the following four scripts, provide the set (cross-fold) number [1-20] with the ```-s``` flag.  
+
+Generate sex-specific GWAS summary statistics estimated in both sexes and sexes separately.
+You will need quality checked genotype files (from [QC.sh](/scripts/QC.sh)) labeled ukb_imp_chr(1-22)_v3_11. This requires UK Biobank access. 
 Code Example: ```PGS_GWAS_2.sh -p height -s 1```
 
 Continue procedure using the following scripts adding the set number to the ```-s``` flag:  
@@ -135,10 +142,11 @@ Code Example: ```./mash_100.R -p height -s 2```
 Code Example: ```./mash_posterior.R -p height -s 2```  
 Code Example: ```./lfsr_to_pvalue.R -p height -s 2```  
 
-Clumping and thresholding procedure.  
-Code Example: ```PGS_CT_SCORE_4.sh -p height -s 2```
+Clumping and thresholding procedure. Download range_list.txt to the directory your scripts are located. These contain the p-value ranges for the CT procedure. 
+Code Example: ```PGS_CT_score_4.sh -p height -s 2```
 
-Print out predictions using PGS based on three methods described in **Text S1**.   
+########################## TODO ##############################
+Print out predictions using PGS based on four models described in **Text S8**.   
 Code Example: ```PGS_predict_5_linear.R -p height -s 2```
 
 #### Plots

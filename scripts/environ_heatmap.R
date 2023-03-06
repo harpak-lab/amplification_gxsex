@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 source("config.R")
-rm(list= ls()[!(ls() %in% c('R_LIB','LDSC_FILE'))])
+rm(list= ls()[!(ls() %in% c('R_LIB','GWAS_DIR'))])
 library("dplyr", lib.loc=R_LIB)
 library("tidyr", lib.loc=R_LIB)
 library("reshape2", lib.loc=R_LIB)

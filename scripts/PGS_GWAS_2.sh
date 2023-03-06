@@ -1,7 +1,7 @@
 #!/bin/sh
 
 source config.R
-while getopts p:m: flag
+while getopts p:s: flag
 do
     case "${flag}" in
         p) PHENO=${OPTARG};;
@@ -10,7 +10,7 @@ do
 done
 echo $PHENO; echo $MODE
 PGS_DIR=$GWAS_DIR/$PHENO/PGS_$SET
-mkdir -p $PGS_DIR/{both_sex,female,male}
+mkdir -p $PGS_DIR/{both_sex,both_sex_std,female,male}
 
 # GWAS for both sex, female, and male specfic
 COL_NAMES=chrom,pos,ref,alt,ax,test,nobs,beta,se,tz,p
@@ -24,6 +24,14 @@ do
     --remove $PGS_DIR/${PHENO}_female_testIIDs.txt $PGS_DIR/${PHENO}_male_testIIDs.txt \
     --pheno pheno_${PHENO}.txt --pheno-name $PHENO --out $PGS_DIR/both_sex/both_sex_${i} \
     --covar covariates.txt --covar-col-nums 3-14 --covar-variance-standardize
+
+    # both sex, standardized by sex
+    plink2 --memory 64000 --threads 16 --glm no-x-sex hide-covar cols=$COL_NAMES \
+    --pfile $QC_DIR/ukb_imp_chr${i}_v3_11 \
+    --remove $PGS_DIR/${PHENO}_female_testIIDs.txt $PGS_DIR/${PHENO}_male_testIIDs.txt \
+    --pheno pheno_${PHENO}_std.txt --pheno-name $PHENO --out $PGS_DIR/both_sex_std/both_sex_std_${i} \
+    --covar covariates.txt --covar-col-nums 3-14 --covar-variance-standardize
+
     # sex-specific
     for sex in "${arr[@]}"
     do 
@@ -41,7 +49,7 @@ plink2 --memory 64000 --threads 16 --pfile $QC_DIR/ukb_imp_all_v3_11 --keep $PGS
 
 # combine GWAS results
 HEADER='#CHROM\tPOS\tID\tREF\tALT\tA1\tAX\tTEST\tOBS_CT\tBETA\tSE\tT_STAT\tP\n'
-declare -a arr=("both_sex" "female" "male")
+declare -a arr=("both_sex" "both_sex_std" "female" "male")
 for sex in "${arr[@]}"
 do
     cd $PGS_dir/$sex

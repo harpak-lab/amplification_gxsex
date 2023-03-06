@@ -18,17 +18,19 @@ if (is.null(opt$pheno)) {
   stop("Missing argument for phenotype code", call.=FALSE)
 }
 pheno <- opt$pheno; print(pheno)
-mode <- opt$set; print(mode)
+set <- opt$set; print(set)
 
 # load mash data from setup
-if (mode == "additive") {
-    suffix <- "" ; wd <- paste0(GWAS_DIR,"/",pheno,"/mash")
+if (set == "additive") {
+    setwd( paste0(GWAS_DIR,"/",pheno,"/mash") )
+    load(file= paste0(pheno,"_mash.RData")) 
 
 } else { 
-    suffix <- "_pgs" ; wd <- paste0(GWAS_DIR,"/",pheno,"/PGS_",mode)
+    setwd( paste0(GWAS_DIR,"/",pheno,"/PGS_",set) )
+    load(file= paste0(pheno,"_mash_pgs.RData")) 
+    ## LD groups subset
+    LD_groups <- LD_groups[LD_groups$P.x < 1e-5 | LD_groups$P.y < 1e-5,]
 } 
-setwd(wd)
-load(file= paste0(pheno,"_mash",suffix,".RData")) 
 
 #### MASH ####
 # random subset
@@ -103,7 +105,7 @@ g_ave$grid <- g_ave$grid / rep
 
 # save fitted results
 colnames(mixture) <- cbind(paste0("mix_",0:rep))
-if (mode == "additive") {
+if (set == "additive") {
     write.table(mixture, file=paste0(pheno,"mixprop_100_all.txt"), sep="\t", row.names=FALSE)
     save(g_list, g_ave, file= paste0(pheno,"_mash_100g.RData"))
 } else {

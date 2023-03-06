@@ -16,21 +16,35 @@ if (is.null(opt$pheno)) {
   stop("Missing argument for phenotype code", call.=FALSE)
 }
 pheno <- opt$pheno; print(pheno)
-mode <- opt$set; print(mode)
+set <- opt$set; print(set)
 
 # load mash lfsr and pm results
-wd <- paste0(GWAS_DIR, "/", pheno, "/PGS_", mode)
+wd <- paste0(GWAS_DIR, "/", pheno, "/PGS_", set)
 setwd(wd)
 lfsr_df <- read.table(paste0(pheno, "_mash_lfsr_pgs.txt"), sep="\t", head=TRUE, colClasses=c(rep("numeric", 2)))
 pm_df <- read.table(paste0(pheno, "_mash_pm_pgs.txt"), sep="\t", head=TRUE, colClasses=c(rep("numeric", 2)))
 
-get_pseudo_p <- function(sex) {
-    # load gwas p-values, 2 columns: ID and P
-    file_name <- paste0(sex, "_train.", pheno, ".glm.linear")
-    gwas_df <- read.table(file_name, sep = "\t", head = FALSE,
-    col.names = c("CHROM", "POS", "ID", "REF", "ALT", "A1", "AX", "TEST", "OBS_CT", "BETA", "SE", "TSTAT", "P"),
-    colClasses = c(rep("NULL", 2), "character", rep("NULL", 2), "character", rep("NULL",6), "numeric"))
+# load gwas p-values, 2 columns: ID and P
+file_name <- paste0("both_sex_train.", pheno, ".glm.linear")
+gwas_df <- read.table(file_name, sep = "\t", head = FALSE,
+col.names = c("CHROM", "POS", "ID", "REF", "ALT", "A1", "AX", "TEST", "OBS_CT", "BETA", "SE", "TSTAT", "P"),
+colClasses = c(rep("NULL", 2), "character", rep("NULL", 2), "character", rep("NULL",6), "numeric"))
 
+get_pseudo_p <- function(sex) {
+
+    # fix uneven rows
+    if (nrow(gwas_df) != nrow(pm_df)) {
+        id_df <- read.table(paste0("male_train.",pheno,".glm.linear"), sep="\t", head=FALSE,
+            col.names=c("CHROM","POS","ID","REF","ALT","A1","AX","TEST","OBS_CT","BETA","SE","TSTAT","P"),
+            colClasses=c(rep("NULL",2), "character", rep("NULL",10)))
+        if (nrow(gwas_df) == nrow(id_df)) {
+                id_df <- read.table(paste0("female_train.",pheno,".glm.linear"), sep="\t", head=FALSE,
+                    col.names=c("CHROM","POS","ID","REF","ALT","A1","AX","TEST","OBS_CT","BETA","SE","TSTAT","P"),
+                    colClasses=c(rep("NULL",2), "character", rep("NULL",10)))
+        }
+        gwas_df <- gwas_df[gwas_df$ID %in% id_df$ID,]
+    }
+    
     # sort p-values
     sorted_p <- gwas_df[order(gwas_df$P), 3]
     # concatenate ids, A1, lfsr and pm
@@ -52,3 +66,6 @@ get_pseudo_p <- function(sex) {
 
     return(mash_ids)
 }
+
+get_pseudo_p("male")
+get_pseudo_p("female")

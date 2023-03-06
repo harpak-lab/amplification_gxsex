@@ -20,14 +20,14 @@ if (is.null(opt$pheno)) {
   stop("Missing argument for phenotype code", call.=FALSE)
 }
 pheno <- opt$pheno; print(pheno)
-mode <- opt$set; print(mode)
+set <- opt$set; print(set)
 
 # add PGS suffix if using PGS method 
-if (mode == "additive") {
+if (set == "additive") {
     suffix <- "" ; wd <- paste0(GWAS_DIR,"/",pheno,"/mash")
 
 } else { 
-    suffix <- "_pgs" ; wd <- paste0(GWAS_DIR,"/",pheno,"/PGS_",mode)
+    suffix <- "_pgs" ; wd <- paste0(GWAS_DIR,"/",pheno,"/PGS_",set)
 } 
 setwd(wd)
 load(file= paste0(pheno,"_mash",suffix,".RData"))      # setup file
