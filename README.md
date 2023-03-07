@@ -152,7 +152,6 @@ Code Example: ```PGS_predict_20.R -p height -s 2```
 Plot for **Fig. S12**. Download [pgs_20.txt](/intermediate_files/PGS_20.txt) to $GWAS_DIR, which provides a summary of means and standard errors of the PGS results for all phenotypes from the script above.   
 Code: ```PGS_plot.R```
 
-########################## TODO ##############################
 Plot for **Fig. 2A-H and S11**. Move the best .profile file (female_additive..., male_additive..., male_mash..., female_mash..., both_sex_additive...) from set 1 to $GWAS_DIR/[phenotype code]. There should be a total of 5 .profile files for each phenotype in pheno_names.txt.    
 Code: ```pheno_pgs.R```
 Note: We used a 5 fold cross validation for this script and the scripts in "Testosterone as an modulator of amplification" section, with a 50K total test set. 
@@ -160,37 +159,47 @@ Note: We used a 5 fold cross validation for this script and the scripts in "Test
 Plot for **Fig. 2I,J**. This script uses sexspecific_pheno_pgs_lm.txt which is produced in the script before. The Spearman correlation between the male and females panels is printed out.  
 Code: ```pheno_pgs_overall.R```
 
-######## TODO ########
-Plot for **Fig. 4B**. Download [PGS_20_all.txt](/intermediate_files/pgs_20_all.txt).  
+Plot for **Fig. 4B**. Download [PGS_20_all.txt](/intermediate_files/pgs_20_all.txt), which contains all R2 from the 20 folds for the 27 phenotypes.  
 Code: ```pgs_20_utility.R```
 
-
 ### Testosterone as an modulator of amplification
-Plots for **Fig. S9,10**. If using PGS estimated from sex-specific summary statistics (**Fig. S10**), input 'sex-specific' for the ```-m``` or ```--mode``` flag. Otherwise, do not use that flag.  
+Plots for **Fig. 5A and S13,14**. If using PGS estimated from sex-specific summary statistics (**Fig. S14**), input 'sex-specific' for the ```-m``` or ```--mode``` flag. Otherwise, do not use that flag.  
 Code Example: ```G_testosterone.R -p height -n Height```
 
-Plots for **Fig. S11A**.  
+Plots for **Fig. S15A**.  
 Code Example: ```G_testosterone_pgs.R -p height -n Height```
 
 Plot for **Fig. 5B**.  
 Code: ```G_corr_testosterone.R```
 
-Plot for **Fig. S11B**.  
+Plot for **Fig. S15B**.  
 Code: ```G_corr_testosterone_pgs.R```
 
-Plot for **Fig. S12**.  
+Plot for **Fig. S16**.  
 Code: ```G_corr_testosterone_age.R```
 
 ### Model of shared amplification
-Plot for **Fig. 6**.  This script uses pheno_meanvar.txt, which was produced in phenovar_by_phenomean.R. Download ldsc_results.txt, if not already.  
+Plot for **Fig. 6**.  This script uses pheno_meanvar.txt, which was produced in phenovar_by_phenomean.R. Will also need [ldsc_results.txt](/intermediate_files/ldsc_results.txt)
 Code: ```gen_env_bootstrap.R```
 
 ### Sexually-Antagonistic Selection
-Plot for **Fig. 7C,D**.  Download the following RData files:  
-fst_plot_testosterone.1e-05.RData  
-fst_plot_protein_total.1e-05.RData  
-zscore_plot.1e-05.RData  
+Download [/sex_selection](/intermediate_files/sex_selection/) files in $SEL_DIR.  
+Plot for **Fig. 7C,D**.   
 Code: ```sex_selection_plot.R```
 
+Plot for **Fig. S19,20**.  
+Code Example: ```sex_selection_supplement.R```
+
 Analysis for sexually-antagonistic selection was done by Matthew J. Ming. Code can be found [here](https://github.com/MattJMing)
+
+######## TODO ########
+### More Supplementary Scripts
+#### Simulation of covariance structure
+Plot for **Fig. S6**.
+
+#### Competing models for sex differences in trait variance
+Plot for **Fig. S18B**
+
+
+
 

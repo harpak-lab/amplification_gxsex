@@ -9,6 +9,7 @@ $GWAS_DIR
   simulation_matrix_k_20k.RData
   matrice_names.txt
   pgs_20.txt
+  pgs_20_all.txt
   PGS_20_plot.pdf
 
   [phenotype code]
@@ -89,6 +90,10 @@ $LD_1000G
   eur_ids.txt
 
 $SEL_DIR
-  fst_plot_testosterone.1e-05.RData
-  fst_plot_protein_total.1e-05.RData
-  zscore_plot.1e-05.RData
+  nfe_fst_plot_testosterone.1e-05.RData 
+  nfe_fst_plot_protein_total.1e-05.RData 
+  asj_zscore_plot.1e-05.all.Rdata
+  nfe_zscore_plot.1e-05.all.Rdata
+  fin_zscore_plot.1e-05.all.Rdata
+  FIG7C.selection.pdf
+  FIG7D.selection.pdf

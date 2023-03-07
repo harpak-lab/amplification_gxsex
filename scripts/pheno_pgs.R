@@ -85,7 +85,7 @@ colnames(df_pheno) <- c("IID", "pheno","sex")
 
 # load pgs file
 setwd(file.path(GWAS_DIR,pheno))
-file_name <- list.files(pattern="male_additive_")[2]
+file_name <- list.files(pattern="^male_additive_")
 df_male <- read.csv(file_name, sep="", colClasses= c("NULL","integer",rep("NULL",3),"numeric"))
 file_name <- list.files(pattern="female_additive_")
 df_female <- read.csv(file_name, sep="", colClasses= c("NULL","integer",rep("NULL",3),"numeric"))
@@ -163,6 +163,7 @@ p2 <- ggplot(data = f_results, aes(x=Score, y=Pheno, color=as.character(Sex))) +
 
 p <- grid.arrange(p1, p2, ncol=1, nrow=2,
                   left=textGrob(paste0(pheno_title, " (",unit,")"), gp=gpar(fontsize=10), rot=90))
+
 print(p)
 dev.off()
 

@@ -1,5 +1,7 @@
+#!/usr/bin/env Rscript
+
 source("config.R")
-rm(list= ls()[!(ls() %in% c('R_LIB','SEL_FILE'))])
+rm(list= ls()[!(ls() %in% c('R_LIB','SEL_DIR'))])
 
 library("dplyr", lib.loc=R_LIB)
 library("tidyr", lib.loc=R_LIB)
@@ -10,16 +12,27 @@ library("ggsci", lib.loc=R_LIB)
 library("ggpubr", lib.loc=R_LIB)
 library("gridExtra", lib.loc=R_LIB)
 
-# load RData files (from Matt)
-setwd(SEL_FILE)
-load("fst_plot_testosterone.1e-05.RData"); testosterone <- pointsf
-load("fst_plot_protein_total.1e-05.RData"); protein <- pointsf
-load("zscore_plot.1e-05.RData")
+# load RData files 
+setwd(SEL_DIR)
+load("nfe_fst_plot_testosterone.1e-05.RData"); testosterone <- pointsf
+load("nfe_fst_plot_protein_total.1e-05.RData"); protein <- pointsf
 
-# split results by ancestry
-azj <- results[results$ANC == "Ashkenazi Jewish",]
-fin <- results[results$ANC == "Finnish",]
-nfe <- results[results$ANC == "Non-Finnish European",]
+# load Z scores
+pvalue <- "1e-05"
+load(paste0("asj_zscore_plot.",pvalue,".all.Rdata"))
+asj <- results; asj_i <- resultsi
+load(paste0("nfe_zscore_plot.",pvalue,".all.Rdata"))
+nfe <- results; nfe_i <- resultsi
+load(paste0("fin_zscore_plot.",pvalue,".all.Rdata"))
+fin <- results; fin_i <- resultsi
+
+# merge ancestry results (new)
+results <- rbind(asj, nfe, fin)
+resultsi <- rbind(asj_i, nfe_i, fin_i)
+resultsi$ANC <- c("Ashkenazi Jewish", "Non-Finnish European", "Finnish")
+results$ANC <- factor(results$ANC, levels=c("Non-Finnish European", "Ashkenazi Jewish", "Finnish"))
+resultsi$ANC <- factor(resultsi$ANC, levels=c("Non-Finnish European", "Ashkenazi Jewish", "Finnish"))
+results$TRAIT <- factor(results$TRAIT, levels=results$TRAIT[order(nfe$TRAIT)])
 
 # lm line
 t_model <- lm(FST~V, testosterone, weight=w)
@@ -42,7 +55,7 @@ f1 <- ggplot(testosterone, aes(x=V, y=FST, weight=w, size=w)) +
 
 f2 <- ggplot(protein, aes(x=V, y=FST, weight=w,size=w)) +
   geom_point(color = "black", alpha= 0.2) +
-  geom_abline(slope=p_B, intercept=p_yi, size=0.5, color="=#6f3c96") +
+  geom_abline(slope=p_B, intercept=p_yi, size=0.5, color="#6f3c96") +
   theme_classic() +
   scale_y_continuous(breaks=c(0,4e-5, 8e-5), labels=c("0","4e-5","8e-5"), limits = c(0,9e-5)) +
   scale_x_continuous(breaks=c(0,5e-4,1e-3), labels=c("0","5e-4","1e-3"), limits=c(0,1.1e-3)) +
@@ -74,4 +87,4 @@ ggplot(results, aes(x=ZMEAN, y=TRAIT)) +
         panel.grid.major.y = element_line(color="gray95", size=0.5))
 dev.off()
 
-
+print(paste0("File, FIG7C.selection.pdf and FIG7D.selection.pdf, in directory: ", SEL_DIR))
