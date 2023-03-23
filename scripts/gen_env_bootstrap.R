@@ -66,7 +66,7 @@ df <- df %>%
 pcolor = '#2b62d9'
 # determine what phenotypes deviate from 1:1 relationship 
 df <- mutate(df, on = ifelse(abs(env_var_ratio-geno_var_ratio) <= (ci_y2-ci_y1) | 
-                               abs(geno_var_ratio-env_var_ratio) <= =(ci_x2-ci_x2), 2,1))
+                               abs(geno_var_ratio-env_var_ratio) <= (ci_x2-ci_x2), 2,1))
 # split dataframe by outliers
 df1 <- df[! df$pheno %in% c('arm_fatfree_mass_L', 'arm_fatfree_mass_R', 'testosterone'),]
 df1_1 <- df1[(df1$env_var_ratio/df1$geno_var_ratio) >=1,]

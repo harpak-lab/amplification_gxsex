@@ -103,7 +103,7 @@ Code Example: ```mash_pvalue_null_plot.R``` or ```mash_pvalue_null_plot.R -m _sa
 
 #### Environmental variance simulation for *mash*
 ##### Create a matrix of 30K individuals and 20K genotypes. 
-In $QC_DIR, Download maf_sample_20k.txt, which contains a random sample of 20K mean allele frequencies from UK Biobank [Resource 1967](https://biobank.ndph.ox.ac.uk/ukb/refer.cgi?id=1967).  
+In $QC_DIR, Download [maf_sample_20k.txt](/intermediate_files/maf_sample_20k.txt), which contains a random sample of 20K mean allele frequencies from UK Biobank [Resource 1967](https://biobank.ndph.ox.ac.uk/ukb/refer.cgi?id=1967).  
 This script creates simulation_matrix_k_5k.RData, simulation_matrix_k_10k.RData, simulation_matrix_k_15k.RData, and simulation_matrix_k_20k.RData.  
 Code: ```environ_matrix.R```
 
@@ -179,7 +179,7 @@ Plot for **Fig. S16**.
 Code: ```G_corr_testosterone_age.R```
 
 ### Model of shared amplification
-Plot for **Fig. 6**.  This script uses pheno_meanvar.txt, which was produced in phenovar_by_phenomean.R. Will also need [ldsc_results.txt](/intermediate_files/ldsc_results.txt)
+Plot for **Fig. 6**.  This script uses pheno_meanvar.txt, which was produced in phenovar_by_phenomean.R. Will also need [ldsc_results.txt](/intermediate_files/ldsc_results.txt)  
 Code: ```gen_env_bootstrap.R```
 
 ### Sexually-Antagonistic Selection
@@ -190,12 +190,30 @@ Code: ```sex_selection_plot.R```
 Plot for **Fig. S19,20**.  
 Code Example: ```sex_selection_supplement.R```
 
-Analysis for sexually-antagonistic selection was done by Matthew J. Ming. Code can be found [here](https://github.com/MattJMing)
+Analysis for sexually-antagonistic selection was done by Matthew J. Ming. Code can be found [here](https://github.com/MattJMing)  
 
-######## TODO ########
+
 ### More Supplementary Scripts
 #### Simulation of covariance structure
-Plot for **Fig. S6**.
+The script is similar to that in [Environmental variance simulation for *mash*](#environmental-variance-simulation-for-mash). We used the defaults for flags: -i and -e. The flag for the pre-specified matrix, -m, must be 4 digits (only single digit matrices, but you can directly customize the matrices in the script). The -a flag refers to the weight of the nonnull matrix. We repeated this step 100 times, using random seed, -s 1-100.  
+ 
+For Fig. S6A, use ```-a 0```. For Fig. S6B, use ```-a 14 -m 4221```. For Fig. S6C, use ```-a 14 -m 1000```.  
+Code Example: ```sim_covariance.R -a 14 -s 1 -m 4221```  
+
+Run mash. Use RData file names generated from previous script as the input.  
+Code Example:  ```mash_simcov.R -n mash_4221_1```  
+
+Plot for **Fig. S6**.  
+Concatenate all 100 .txt files generated from the script above by column and rename. Use the new name as the input. Our results are located in [intermediate_files](/intermediate_files/simulation%20covariance/).  
+Code Example: ```heatmap_simcov.R -n mash_4221_all```
+
+#### Characterizing GxSex based on independent analysis of individual sex-heterogenous SNPs 
+Use one the following phenotypes as the flag: [height, bmi, creatinine, IGF1, systolicBP_auto]. We used the defaults for flags: -i and -e. We repeated this step 100 times, using random seed, -s 1-100.       
+```sim_sexhet.R -p height -s 1```  
+
+############ TODO: traglia results ###   
+Results for **Table S6**.  
+```
 
 #### Competing models for sex differences in trait variance
 Plot for **Fig. S18B**

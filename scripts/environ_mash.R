@@ -43,6 +43,6 @@ for (snp_num in snp_nums) {
     }
 }
 
-print(paste0("Files (.txt) in directory: " GWAS_DIR))
+print(paste0("Files (.txt) in directory: ", GWAS_DIR))
 
 

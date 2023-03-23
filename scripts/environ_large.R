@@ -110,4 +110,4 @@ for (j in c(1,10,15,20)) {    # for each of the premade genotype matrices
 }
 file_name <- paste0("mash_",snp_num,"_",h2,"_",E_ratio,".RData")
 save(mash_BETA, mash_SE, file=file_name)
-print(paste0("File, ", file_name, ", in directory: " GWAS_DIR))
+print(paste0("File, ", file_name, ", in directory: ", GWAS_DIR))

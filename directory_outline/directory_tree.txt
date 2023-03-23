@@ -97,3 +97,6 @@ $SEL_DIR
   fin_zscore_plot.1e-05.all.Rdata
   FIG7C.selection.pdf
   FIG7D.selection.pdf
+
+$SIM_COV
+  # simulation covariance RData and text files

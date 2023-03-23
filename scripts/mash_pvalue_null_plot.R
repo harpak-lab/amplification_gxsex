@@ -22,7 +22,7 @@ method <- opt$mode
 wd <- paste0(GWAS_DIR)
 setwd(wd)
 
-all_null <- read.csv(paste0("noeffect_weight",method,".txt", sep="\t")
+all_null <- read.csv(paste0("noeffect_weight",method,".txt", sep="\t"))
 
 # NO EFFECT PLOT
 pdf(file=paste0(pheno,"_null",method,".pdf"), width=4, height=3)

@@ -30,3 +30,6 @@ LD_1000G="~/1000G/all_phase3"   # 1000 genomes phase 3 bfile (all_phase3 is a pr
 
 ### SELECTION ###
 SEL_DIR="~/selection"           # sexually-antagonistic selection results
+
+### SIMULATION COVARIANCE ###
+SIM_COV="~/sim_cov"           # simulation covariance results

@@ -117,5 +117,5 @@ dev.off()
 }
 }
 
-print(paste0("Files (.pdf) in directory: " GWAS_DIR))
+print(paste0("Files (.pdf) in directory: ", GWAS_DIR))
 
