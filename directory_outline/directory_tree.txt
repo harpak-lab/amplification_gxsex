@@ -57,6 +57,7 @@ $PHENO_DIR
     sex_ids.txt
     pheno_names.txt
     pheno_meanvar.txt
+    pheno_var_bootstrap.txt
     FIG4a_phenovar_phenomean.pdf
     FIG4b_phenovar_amplification.pdf
 
@@ -73,7 +74,7 @@ $LDSC_FILE
   ldsc_results.txt
   relative_h2.txt
   FIG1.r2_by_h2.pdf
-  #
+  # ldsc files for each phenotype
   [phenotype code]
     [phenotype code]_[sex].sumstats.gz    # reformatted summary statistics
     [phenotype code]_[sex]_h2.log         # heritability
@@ -100,3 +101,6 @@ $SEL_DIR
 
 $SIM_COV
   # simulation covariance RData and text files
+  mash_0_all.txt
+  mash_4221_all.txt
+  mash_1000_all.txt

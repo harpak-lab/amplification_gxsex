@@ -19,14 +19,14 @@ declare -a arr=("female" "male")
 for i in {1..22}
 do
     # both sex
-    plink2 --memory 64000 --threads 16 --glm no-x-sex hide-covar cols=$COL_NAMES \
+    plink2 --memory $mem --threads $threads --glm no-x-sex hide-covar cols=$COL_NAMES \
     --pfile $QC_DIR/ukb_imp_chr${i}_v3_11 \
     --remove $PGS_DIR/${PHENO}_female_testIIDs.txt $PGS_DIR/${PHENO}_male_testIIDs.txt \
     --pheno pheno_${PHENO}.txt --pheno-name $PHENO --out $PGS_DIR/both_sex/both_sex_${i} \
     --covar covariates.txt --covar-col-nums 3-14 --covar-variance-standardize
 
     # both sex, standardized by sex
-    plink2 --memory 64000 --threads 16 --glm no-x-sex hide-covar cols=$COL_NAMES \
+    plink2 --memory $mem --threads $threads --glm no-x-sex hide-covar cols=$COL_NAMES \
     --pfile $QC_DIR/ukb_imp_chr${i}_v3_11 \
     --remove $PGS_DIR/${PHENO}_female_testIIDs.txt $PGS_DIR/${PHENO}_male_testIIDs.txt \
     --pheno pheno_${PHENO}_std.txt --pheno-name $PHENO --out $PGS_DIR/both_sex_std/both_sex_std_${i} \
@@ -35,7 +35,7 @@ do
     # sex-specific
     for sex in "${arr[@]}"
     do 
-        plink2 --memory 64000 --threads 16 --glm no-x-sex hide-covar cols=$COL_NAMES \
+        plink2 --memory $mem --threads $threads --glm no-x-sex hide-covar cols=$COL_NAMES \
         --pfile $QC_DIR/ukb_imp_chr${i}_v3_11 --keep-${sex}s \
         --remove $PGS_DIR/${PHENO}_female_testIIDs.txt $PGS_DIR/${PHENO}_male_testIIDs.txt \
         --pheno pheno_${PHENO}.txt --pheno-name $PHENO --out $PGS_DIR/${sex}/${sex}_${i} \
@@ -44,7 +44,7 @@ do
 done
 
 # create test bfile
-plink2 --memory 64000 --threads 16 --pfile $QC_DIR/ukb_imp_all_v3_11 --keep $PGS_DIR/${PHENO}_female_testIIDs.txt $PGS_DIR/${PHENO}_male_testIIDs.txt \
+plink2 --memory $mem --threads $threads --pfile $QC_DIR/ukb_imp_all_v3_11 --keep $PGS_DIR/${PHENO}_female_testIIDs.txt $PGS_DIR/${PHENO}_male_testIIDs.txt \
 --make-bed --out $PGS_DIR/${PHENO}_test
 
 # combine GWAS results

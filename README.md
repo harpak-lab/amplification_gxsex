@@ -190,7 +190,7 @@ Code: ```sex_selection_plot.R```
 Plot for **Fig. S19,20**.  
 Code Example: ```sex_selection_supplement.R```
 
-Analysis for sexually-antagonistic selection was done by Matthew J. Ming. Code can be found [here](https://github.com/MattJMing)  
+Analysis for sexually-antagonistic selection was done by [Matthew J. Ming](https://github.com/MattJMing). Code can be found in the [matt_selection](/matt_selection/) directory. Follow the associated README.  
 
 
 ### More Supplementary Scripts
@@ -208,15 +208,17 @@ Concatenate all 100 .txt files generated from the script above by column and ren
 Code Example: ```heatmap_simcov.R -n mash_4221_all```
 
 #### Characterizing GxSex based on independent analysis of individual sex-heterogenous SNPs 
-Use one the following phenotypes as the flag: [height, bmi, creatinine, IGF1, systolicBP_auto]. We used the defaults for flags: -i and -e. We repeated this step 100 times, using random seed, -s 1-100.       
-```sim_sexhet.R -p height -s 1```  
+Use one the following phenotypes as the flag: [height, bmi, creatinine, IGF1, systolicBP_auto]. We used the defaults for flags: -i and -e. We repeated this step 10 times, using random seed, -s 1-10.       
+Code Example: ```sim_sexhet.R -p height -s 1```  
 
-############ TODO: traglia results ###   
 Results for **Table S6**.  
-```
+Input the phenotype code and name of RData file generated from the previous step.  
+Code Example: ```sexhet_p.R -p height -n mash_height_1```
 
 #### Competing models for sex differences in trait variance
 Plot for **Fig. S18B**
+Similar to script in [Model of shared amplification](#model-of-shared-amplification).  
+Code Example: ```gen_env_models.R```
 
 
 
